@@ -13,7 +13,7 @@ class NewVisitorTest(unittest.TestCase):
 	def test_check_title(self):
 		self.browser.get('http://localhost:8000')
 		self.assertIn('To-Do', self.browser.title)
-		self.fail('Finish Test!')
+		#self.fail('Finish Test!')
 
 
 
