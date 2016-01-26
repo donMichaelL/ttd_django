@@ -44,7 +44,7 @@ class HomePageTest(TestCase):
 		request.POST['item_text'] = 'A new list item'
 		response = home_page(request)
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(response['location'], '/')
+		self.assertEqual(response['location'], '/lists/the-only-list')
 
 	def test_home_page_only_saves_items_when_necessary(self):
 		request = HttpRequest()
