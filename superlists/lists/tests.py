@@ -12,18 +12,8 @@ class HomePageTest(TestCase):
 		self.assertEqual(found.func, home_page)
 
 	def test_home_page_returns_correct_html(self):
-		request = HttpRequest()
-		response = home_page(request)
-		expected_html = render_to_string('home.html', request=request)
-		self.assertEqual(response.content.decode(), expected_html)
-
-	def test_home_page_displays_all_list_items(self):
-		Item.objects.create(text='item 1')
-		Item.objects.create(text='item 2')
-		request = HttpRequest()
-		response = home_page(request)
-		self.assertIn('item 1', response.content.decode())
-		self.assertIn('item 2', response.content.decode())
+		response = self.client.get('/')
+		self.assertTemplateUsed(response, 'home.html')
 
 	def test_home_page_can_save_a_POST_request(self):
 		request = HttpRequest()
@@ -65,3 +55,16 @@ class ItemModelTest(TestCase):
 		second_saved_item = saved_items[1]
 		self.assertEqual(first_saved_item.text,"The First list item")
 		self.assertEqual(second_saved_item.text,"Item the second")
+
+
+class LiveViewTest(TestCase):
+	def test_displays_all_items(self):
+		Item.objects.create(text='item 1')
+		Item.objects.create(text='item 2')
+		response = self.client.get('/lists/the-only-list/')
+		self.assertContains(response, 'item 1')
+		self.assertContains(response, 'item 2')
+
+	def test_users_list_template(self):
+		response = self.client.get('/lists/the-only-list/')
+		self.assertTemplateUsed(response, 'list.html')
