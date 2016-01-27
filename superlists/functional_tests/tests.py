@@ -33,7 +33,7 @@ class NewVisitorTest(LiveServerTestCase):
 
 		edith_list_url = self.browser.current_url
 		# check redirection to new url
-		self.assertRegexpMatches(edith_list_url, '/lists/.+')
+		self.assertRegexpMatches(edith_list_url, '/lists/.+/')
 
 		self.check_for_row_in_list_table('1: Buy peacock feathers')
 
@@ -45,8 +45,8 @@ class NewVisitorTest(LiveServerTestCase):
 		# check values
 		self.check_for_row_in_list_table('1: Buy peacock feathers')
 		self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
-
 		self.browser.quit()
+
 		# new user
 		self.browser = webdriver.Firefox()
 		self.browser.get(self.live_server_url)
